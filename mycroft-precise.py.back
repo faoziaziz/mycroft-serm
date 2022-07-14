@@ -12,6 +12,17 @@ def on_act():
 
 def main():
     # Load OAuth 2.0 credentials.
+    try:
+        with open('/data/mycroft-precise.json', 'r') as json_file:
+            gva_config = json.load(json_file)
+            engine_path = gva_config["engine_path"]
+            model_path = gva_config["model_path"]
+            trigger_level = gva_config["trigger_level"]
+            sensitivity = gva_config["sensitivity"]
+            command = gva_config["command"]
+    except Exception as e:
+        logging.error("Error loading mycroft-precise.json: %s", e)
+        sys.exit(-1)
 
     try:
         # initiate precise engine with mycroft model
